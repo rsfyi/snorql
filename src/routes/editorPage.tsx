@@ -1,5 +1,8 @@
-import { useEffect, useState } from 'react';
+import { sql } from '@codemirror/lang-sql';
+import CodeMirror from '@uiw/react-codemirror';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { queries } from '../data';
 
 export default function EditorPage() {
@@ -13,6 +16,10 @@ export default function EditorPage() {
     )[0];
     setCurrentQuery(currentQuery);
   }, [id, setCurrentQuery]);
+
+  const onChange = useCallback((value: any, viewUpdate: any) => {
+    console.log('value:', value);
+  }, []);
 
   return (
     <div>
@@ -30,8 +37,16 @@ export default function EditorPage() {
             </span>
           ))}
         </div>
+        <div className="w-full">
+          <CodeMirror
+            value={currentQuery?.query}
+            height="300px"
+            extensions={[sql()]}
+            onChange={onChange}
+          />
+        </div>
         <div>
-          <h2>Editor Goes Here ...</h2>
+          <h2>Response goes here ....</h2>
         </div>
       </div>
     </div>

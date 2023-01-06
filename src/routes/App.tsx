@@ -13,8 +13,8 @@ function App() {
 
   return (
     <div className="mx-auto flex h-screen w-screen max-w-7xl flex-col bg-gray-50">
-      <div className="flex">
-        <div className="h-[90vh] w-1/2 overflow-y-auto border-r border-gray-200">
+      <div className="flex w-full">
+        <div className="h-[90vh] w-[500px] overflow-y-auto border-r border-gray-200">
           <div className="flex h-full flex-col">
             {queryList?.map((query: any, index: number) => (
               <div
@@ -40,7 +40,7 @@ function App() {
             ))}
           </div>
         </div>
-        <main className="grow">
+        <main className="w-2/3">
           <Outlet />
         </main>
       </div>
