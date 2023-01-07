@@ -1,7 +1,9 @@
 import { sql } from '@codemirror/lang-sql';
+
 import CodeMirror from '@uiw/react-codemirror';
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import TabList from '../components/TabList';
 
 import { queries } from '../data';
 
@@ -18,7 +20,7 @@ export default function EditorPage() {
   }, [id, setCurrentQuery]);
 
   const onChange = useCallback((value: any, viewUpdate: any) => {
-    console.log('value:', value);
+    // console.log('value:', value);
   }, []);
 
   return (
@@ -46,8 +48,11 @@ export default function EditorPage() {
           />
         </div>
         <div>
-          <h2>Response goes here ....</h2>
+          <button className="rounded bg-purple-300 px-4 py-2 shadow-sm hover:shadow-lg">
+            Execute Query
+          </button>
         </div>
+        <TabList />
       </div>
     </div>
   );

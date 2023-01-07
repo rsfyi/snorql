@@ -13,6 +13,9 @@ function App() {
 
   return (
     <div className="mx-auto flex h-screen w-screen max-w-7xl flex-col bg-gray-50">
+      <div className="mx-auto w-full max-w-7xl bg-purple-200 py-6 px-2 shadow">
+        <h2 className="text-2xl text-gray-600 underline">SNORQL</h2>
+      </div>
       <div className="flex w-full">
         <div className="h-[90vh] w-[500px] overflow-y-auto border-r border-gray-200">
           <div className="flex h-full flex-col">
