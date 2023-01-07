@@ -5,7 +5,7 @@ export const queries = [
     title:
       'Q116 How to build sequences subsets centered around sites of interest for further alignment and context pattern analysis',
     query:
-      'SELECT  distinct ?entry  ?roi  WHERE {\n ?entry :isoform ?iso.\n  ?iso :modifiedResidue ?ptm;:sequence ?s.\n  #phosphotyrosine\n  ?ptm :in term:PTM-0255;:start ?pos. \n  ?s :chain ?chain;:length ?len.\n  BIND (6 as ?width) .\n  BIND (if (?pos>?width && ?pos<=?len-?width ,substr(?chain, ?pos-?width, 2*?width+1),"---") as ?roi)\n  FILTER(?pos>?width && ?pos<=?len-?width)\n}\norder by ?entry',
+      'SELECT * WHERE {?subject ?predicate ?object . ?object ?k ?o} LIMIT 25',
   },
   {
     id: 2,

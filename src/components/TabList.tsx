@@ -1,7 +1,8 @@
 import { Tab } from '@headlessui/react';
-import { useEffect, useState } from 'react';
-import ReactJson from 'react-json-view';
-import { useParams } from 'react-router-dom';
+import { JsonViewer } from '@textea/json-viewer';
+import { useState } from 'react';
+import D3Graph from './GraphComponent';
+import TableInfo from './TableInfo';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -22,23 +23,8 @@ let tabItems = [
   },
 ];
 
-export default function TabList() {
-  let { id }: any = useParams();
-  const [queryResponse, setQueryResponse] = useState<any>();
+export default function TabList({ queryResponse, error }: any) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  useEffect(() => {
-    const getQueryResult = async () => {
-      const result = await (
-        await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      ).json();
-      setQueryResponse(result);
-    };
-
-    if (selectedIndex === 0) {
-      getQueryResult();
-    }
-  }, [setQueryResponse, selectedIndex, id]);
 
   return (
     <div className="w-full px-2 py-8 sm:px-0">
@@ -64,8 +50,18 @@ export default function TabList() {
         <Tab.Panels className="mt-2 mb-6 h-full w-full">
           <div className="mt-6">
             {queryResponse && selectedIndex === 0 && (
-              <ReactJson src={queryResponse} />
+              <JsonViewer value={queryResponse} />
             )}
+
+            {queryResponse && selectedIndex === 1 && (
+              <TableInfo queryResponse={queryResponse} />
+            )}
+
+            {queryResponse && selectedIndex === 2 && (
+              <D3Graph queryResponse={queryResponse} />
+            )}
+
+            {error && <pre>{error}</pre>}
           </div>
         </Tab.Panels>
       </Tab.Group>

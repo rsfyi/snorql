@@ -10,6 +10,9 @@ import { queries } from '../data';
 export default function EditorPage() {
   let { id }: any = useParams();
   const [currentQuery, setCurrentQuery] = useState<any>(null);
+  const [editorQueryValue, setEditorQueryValue] = useState<any>('');
+  const [queryResponse, setQueryResponse] = useState<any>();
+  const [error, setError] = useState<any>('');
 
   useEffect(() => {
     const queriesList = queries;
@@ -17,11 +20,28 @@ export default function EditorPage() {
       (query: any) => parseInt(query.id) === parseInt(id)
     )[0];
     setCurrentQuery(currentQuery);
+    setQueryResponse('');
+    setError('');
   }, [id, setCurrentQuery]);
 
   const onChange = useCallback((value: any, viewUpdate: any) => {
-    // console.log('value:', value);
+    setEditorQueryValue(value);
   }, []);
+
+  const handleQueryChange = async () => {
+    try {
+      const result = await (
+        await fetch(
+          `https://dbpedia.org/sparql?query=${encodeURIComponent(
+            editorQueryValue || currentQuery?.query
+          )}&format=json`
+        )
+      ).json();
+      setQueryResponse(result);
+    } catch (error: any) {
+      setError(error?.message || error);
+    }
+  };
 
   return (
     <div>
@@ -48,11 +68,14 @@ export default function EditorPage() {
           />
         </div>
         <div>
-          <button className="rounded bg-purple-300 px-4 py-2 shadow-sm hover:shadow-lg">
+          <button
+            onClick={handleQueryChange}
+            className="rounded bg-purple-300 px-4 py-2 shadow-sm hover:shadow-lg"
+          >
             Execute Query
           </button>
         </div>
-        <TabList />
+        <TabList queryResponse={queryResponse} error={error} />
       </div>
     </div>
   );
