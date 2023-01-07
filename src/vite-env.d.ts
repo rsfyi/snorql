@@ -1,3 +1,3 @@
 /// <reference types="vite/client" />
 
-declare module 'd3-sparql' {}
+declare module 'd3sparql' {}

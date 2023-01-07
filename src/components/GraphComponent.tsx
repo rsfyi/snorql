@@ -10,6 +10,27 @@ export default function D3Graph({ queryResponse }: any) {
     const currentQuery = queriesList.filter(
       (query: any) => parseInt(query.id) === parseInt(id)
     )[0];
+
+    console.log(d3sparql, 'd3sparql');
+
+    d3sparql?.query(
+      'https://dbpedia.org/sparql',
+      `${currentQuery.query}`,
+      (json: any) => {
+        var config = {
+          radius: 10,
+          charge: -500,
+          distance: 100,
+          width: 1000,
+          height: 750,
+          selector: '#result',
+        };
+
+        console.log('I am here after query...', json);
+
+        d3sparql.forcegraph(json, config);
+      }
+    );
   });
-  return <h1>I am graph component</h1>;
+  return <div id="result" />;
 }
