@@ -11,9 +11,7 @@ export default function D3Graph({ queryResponse }: any) {
       (query: any) => parseInt(query.id) === parseInt(id)
     )[0];
 
-    console.log(d3sparql, 'd3sparql');
-
-    d3sparql?.query(
+    (window as any)?.d3sparql?.query(
       'https://dbpedia.org/sparql',
       `${currentQuery.query}`,
       (json: any) => {
@@ -26,11 +24,10 @@ export default function D3Graph({ queryResponse }: any) {
           selector: '#result',
         };
 
-        console.log('I am here after query...', json);
-
-        d3sparql.forcegraph(json, config);
+        (window as any)?.d3sparql.forcegraph(json, config);
       }
     );
-  });
+  }, []);
+
   return <div id="result" />;
 }
